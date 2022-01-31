@@ -36,10 +36,10 @@ conda activate g2v-env
 ```
 
 ### Trained gene annotation embedding
-The trained word2vec model is available under `models_and_data` as a gensim model.
-To further use it for downstream analysis set up your working environment and load the model.
+The trained word2vec model on the entire genomic corpus are available in `models_and_data` as a gensim model.
+To farther use them for downstream analysis set up your working environment and load the model.
 
-In python:
+In python run:
 ```
 from gensim.models import word2vec as w2v
 
@@ -47,8 +47,7 @@ MODEL = model_and_data/gene2vec_w5_v300_tf24_annotation_extended/gene2vec_w5_v30
 mdl = w2v.Word2Vec.load(MODEL)
 ```
 
-from here you may use [gensim api](https://radimrehurek.com/gensim/models/word2vec.html) to extract words embeddings, calculate distances between words and more.
-
+from here you may use [gensim api](https://radimrehurek.com/gensim/models/word2vec.html) to extract words embeddings, calculate distances between words and more 
 For example:
 ```
 mdl.wv.vocab["K09140.2"]
@@ -56,9 +55,9 @@ mdl.wv.vocab["K09140.2"]
 will obtain the embedding of the word `K09140.2`, a sub-cluster of the KO identifier `K09140` in KEGG.
 
 ### Two-dimensional embedding space
-Gene embeddings after dimension reduction using UMAP are available as a pickle file.
+Gene embeddings after dimension reduction using UMAP are available as a pickl file.
 
-In python:
+In python run:
 ```
 import pickle
 
