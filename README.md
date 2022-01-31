@@ -81,17 +81,17 @@ To change specific parameters of the algorithm run
 
 ### Function classification model validation
 Function classification validations are available in:
-`models_and_data/gene2vec_w5_v300_tf24_annotation_extended/predictions`.
+`models_and_data/gene2vec_w5_v300_tf24_annotation_extended/predictions`.   
 To re-run validations and generate AUC and AUPR graphs run the following script:
 ```
-python scripts/classify.py --model PATH_TO_W2V_MDL --output PATH_TO_OUT_DIR --metadata metadata.csv
+python scripts/classify.py --model PATH_TO_W2V_MDL --output PATH_TO_OUT_DIR --metadata PATH_TO_METADATA
 ```
-The csv file `metadata.csv` can be found in `models_and_data`.
-Running this script will produce all data found under the folder:
+The csv file `metadata.csv` can be found in `models_and_data`.  
+Running this script will produce all data found under the folder:  
 `models_and_data/gene2vec_w5_v300_tf24_annotation_extended/predictions`
 
 ### Function classification of all hypothetical proteins
-All prediction of hypothetical proteins in the corpus can be found here:
+All predictions of hypothetical proteins in the corpus can be found here:
 `models_and_data/gene2vec_w5_v300_tf24_annotation_extended/predictions/hypothetical_predictions.pkl`
 
 To load the file as table, run in python:
