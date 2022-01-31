@@ -35,7 +35,7 @@ conda env create -f environment.yml
 conda activate g2v-env
 ```
 
-### Trained gene annotation embedding
+## Trained gene annotation embedding
 The trained word2vec model on the entire genomic corpus are available in `models_and_data` as a gensim model.
 To farther use them for downstream analysis set up your working environment and load the model.
 
@@ -54,7 +54,7 @@ mdl.wv.vocab["K09140.2"]
 ```
 will obtain the embedding of the word `K09140.2`, a sub-cluster of the KO identifier `K09140` in KEGG.
 
-### Two-dimensional embedding space
+## Two-dimensional embedding space
 Gene embeddings after dimension reduction using UMAP are available as a pickl file.
 
 In python run:
@@ -65,7 +65,7 @@ with open("model_and_data/gene2vec_w5_v300_tf24_annotation_extended/words_umap_2
     embbedings_2d = pickle.load(handle)
 ```
 
-###  Re-training word embeddings using the corpus
+## Re-training word embeddings using the corpus
 Re-training word embeddings with different parameters can be executed using the following script:
 1. First, go to `models_and_data` folder and extract the corpus files
 ```
@@ -79,7 +79,7 @@ python src/gene2vec.py --input 'corpus/*.txt'
 To change specific parameters of the algorithm run
 `python src/gene2vec.py --help` and configure accordingly. 
 
-### Function classification model validation
+## Function classification model validation
 Function classification validations are available in:
 `models_and_data/gene2vec_w5_v300_tf24_annotation_extended/predictions`.
 To re-run validations and generate AUC and AUPR graphs run the following script:
@@ -90,7 +90,7 @@ The csv file `metadata.csv` can be found in `models_and_data`.
 Running this script will produce all data found under the folder:
 `models_and_data/gene2vec_w5_v300_tf24_annotation_extended/predictions`
 
-### Function classification of all hypothetical proteins
+## Function classification of all hypothetical proteins
 All prediction of hypothetical proteins in the corpus can be found here:
 `models_and_data/gene2vec_w5_v300_tf24_annotation_extended/predictions/hypothetical_predictions.pkl`
 
