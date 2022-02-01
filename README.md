@@ -106,5 +106,15 @@ python scripts/predict_hypothetical.py --model PATH_TO_W2V_MDL --output PATH_TO_
 ```
 
 
+### Paper figures reproducibility
+All paper figures (excluding illustrations) are available as a jupyter notebook.  
+To run the notebook on your computer, go to `figures/` and type `jupyter notebook` in your command line.  
+The notebook `paper_figures.ipynb` will be available on your local machine.  
+
+*Note:* running the notebook requires the `models_and_data` folder, configure paths accordingly.
+
+
+
+
 
 
