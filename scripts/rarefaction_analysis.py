@@ -1,12 +1,7 @@
 import pandas as pd
-import re
 import numpy as np
 import os
-import glob
-import sys
-sys.path.append("/davidb/daniellemiller/BioNLP/BioNLP")
 import argparse
-import pickle
 
 # word 2 vec
 from gensim.models import word2vec as w2v
