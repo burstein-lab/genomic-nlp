@@ -7,9 +7,12 @@ This repository contains the code used for compiling and analyzing the "biologic
 
 
 ## Getting the data
-Start by downloading the data files from Zenodo database.
+<ins>*Note:*</ins> The data will be deposited to the Zenodo database and assigned a permanent DOI.
+meanwhile, do not use the download instructions below and go to [this link](http://tiny.cc/eb6ouz).
 
-1. Click on the Zenodo link at the top of the repository or use [this link](https://www.Zenodo.org) to download the data zip file
+Start by downloading the data files from the Zenodo database.  
+
+1. Click on the Zenodo link at the top of the repository or use [this link](http://tiny.cc/eb6ouz) to download the data zip file
 2. Alternatively, use the command line as follows: 
 ```
 mkdir data
@@ -39,7 +42,7 @@ conda activate g2v-env
 The trained word2vec model on the entire genomic corpus are available in `models_and_data` as a gensim model.
 To farther use them for downstream analysis set up your working environment and load the model.
 
-In python run:
+In python:
 ```
 from gensim.models import word2vec as w2v
 
@@ -55,9 +58,9 @@ mdl.wv.vocab["K09140.2"]
 will obtain the embedding of the word `K09140.2`, a sub-cluster of the KO identifier `K09140` in KEGG.
 
 ### Two-dimensional embedding space
-Gene embeddings after dimension reduction using UMAP are available as a pickl file.
+Gene embeddings after dimension reduction using UMAP are available as a pickle file.
 
-In python run:
+In python:
 ```
 import pickle
 
@@ -112,7 +115,6 @@ To run the notebook on your computer, go to `figures/` and type `jupyter noteboo
 The notebook `paper_figures.ipynb` will be available on your local machine.  
 
 *Note:* running the notebook requires the `models_and_data` folder, configure paths accordingly.
-
 
 
 
