@@ -1,96 +1,69 @@
-import glob
-import shutil
+import logging
 import os
-import codecs
+import sys
+sys.path.append("/davidb/daniellemiller/BioNLP/BioNLP")
+
+from src.models import NNClfCVFolds, RFClfCVFolds, XGBClfCVFolds, SVMClfCVFolds
+from src.plot import FoldModelPlots
 import argparse
 import pickle
 
-import numpy as np
-from sklearn.model_selection import KFold
-from tqdm import tqdm
 
-def cp_files(list_of_files, dest):
-    for f in list_of_files:
-        if os.path.isfile(f):
-            shutil.copy(f, dest)
+argparse = argparse.ArgumentParser()
+argparse.add_argument('--cv', default='LOPOCV', type=str, help='name of the cross validation')
+argparse.add_argument('--output',
+                      default='/predictions',
+                      type=str, help='predictions output dir')
+argparse.add_argument('--metadata',
+                      default='metadata.csv',
+                      type=str, help='metadata csv file path')
+argparse.add_argument('--fold2data',
+                      default='fold2data.pkl',
+                      type=str, help='mapping of LOPOCV train and test')
 
-def extract_known_words(list_of_files, unknown='hypo.clst'):
-    corpus_raw = u""
-    for f in tqdm(list_of_files):
-        with codecs.open(f, "r", "utf-8") as book_file:
-            corpus_raw += book_file.read()
-    raw_sentences = corpus_raw.split('. ')
-    words = []
-    for raw_sentence in tqdm(raw_sentences):
-        if len(raw_sentence) > 0:
-            words.extend([w for w in raw_sentence.split() if unknown not in w])
-    return set(words)
+params = argparse.parse_args()
 
-class CorpusCV():
-    def __init__(self, corpus_dir, output_dir, folds, name, folds_mapping=None):
-        self.corpus_dir = corpus_dir
-        self.output_dir = output_dir
-        self.nfolds = folds
-        self.name = name
-        self.folds_mapping = folds_mapping
+CV = params.cv
+METADATA = params.metadata
+OUTPUT_DIR = params.output
+FOLD2DATA = params.fold2data
 
-    def create_output_dir(self):
-        os.makedirs(os.path.join(self.output_dir, self.name),exist_ok=True)
-        self.output_dir = os.path.join(self.output_dir, self.name)
+# configure logger
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s',
+                    filename=os.path.join(OUTPUT_DIR, f"Validation.log"), level=logging.INFO)
 
-    def corpus_kfold(self):
-        corpus_files = np.array(glob.glob(self.corpus_dir))
-        cv = KFold(n_splits=self.nfolds)
-        fold = 1
-        for train_idx, test_idx in cv.split(corpus_files):
-            train_files = corpus_files[train_idx]
-            test_files = corpus_files[train_idx]
+# top predicted LABEL
+curated_labels_no_pumps = ['Amino sugar and nucleotide sugar metabolism',
+                           'Benzoate degradation',
+                           'Energy metabolism',
+                           'Oxidative phosphorylation',
+                           'Porphyrin and chlorophyll metabolism',
+                           'Prokaryotic defense system',
+                           'Ribosome',
+                           'Secretion system',
+                           'Two-component system']
 
-            test_words = extract_known_words(test_files)
+labels = [(curated_labels_no_pumps, 'NO-PUMPS-CURATED-LABELS')]
+LABEL = 'label'
+q = ''
 
-            # create the fold directory
-            fold_dir = os.path.join(self.output_dir, f'fold_{fold}')
-            train_dir = os.path.join(fold_dir, 'corpus')
-            os.makedirs(fold_dir, exist_ok=True)
-            os.makedirs(train_dir, exist_ok=True)
+with open(FOLD2DATA, 'rb') as o:
+    fold2data = pickle.load(o)
 
-            cp_files(train_files, train_dir)
-            np.save(os.path.join(fold_dir, 'test_words.npy'), test_words)
+for label, label_alias in labels:
+    alias = label_alias
+    MDLS = [(NNClfCVFolds(X=1, y=1, cv=5, out_dir=OUTPUT_DIR, fold2data=fold2data[CV], fold_type=CV), 'CVFOLD_' + alias),
+            (XGBClfCVFolds(X=1, y=1, cv=5, out_dir=OUTPUT_DIR, fold2data=fold2data[CV], fold_type=CV), 'CVFOLD_' + alias),
+            (RFClfCVFolds(X=1, y=1, cv=5, out_dir=OUTPUT_DIR, fold2data=fold2data[CV], fold_type=CV), 'CVFOLD_' + alias),
+            (SVMClfCVFolds(X=1, y=1, cv=5, out_dir=OUTPUT_DIR, fold2data=fold2data[CV], fold_type=CV), 'CVFOLD_' + alias)]
 
-            fold += 1
 
-    def corpusLOPOCV(self):
-        with open(self.folds_mapping, 'rb') as handle:
-            lopocv_mapper = pickle.load(handle)
-
-        for phylum in lopocv_mapper:
-            train_files = lopocv_mapper[phylum]['train_files']
-            test_files = lopocv_mapper[phylum]['test_files']
-
-            test_words = extract_known_words(test_files)
-
-            # create the fold directory
-            fold_dir = os.path.join(self.output_dir, f'fold_{phylum}')
-            train_dir = os.path.join(fold_dir, 'corpus')
-            os.makedirs(fold_dir, exist_ok=True)
-            os.makedirs(train_dir, exist_ok=True)
-
-            cp_files(train_files, train_dir)
-            np.save(os.path.join(fold_dir, 'test_words.npy'), test_words)
-
-if __name__ == '__main__':
-    argparse = argparse.ArgumentParser()
-    argparse.add_argument('--input_dir', required=True, type=str, help='input directory with the full corpus files')
-    argparse.add_argument('--output_dir', required=True, type=str, help='output directory for cross validation')
-    argparse.add_argument('--lopocv', default=None, type=str, help='folds mapping of corpus files')
-    argparse.add_argument('--name', default='5foldcv', type=str, help='cv identifier')
-    argparse.add_argument('--folds', default=5, type=int, help='number of folds in cv')
-
-    params = argparse.parse_args()
-
-    corpus_cv = CorpusCV(params.input_dir, params.output_dir, params.folds, params.name, params.lopocv)
-    corpus_cv.create_output_dir()
-    if corpus_cv.folds_mapping is None:
-        corpus_cv.corpus_kfold()
-    else:
-        corpus_cv.corpusLOPOCV()
+    for mdl, name in MDLS:
+        mdl.classification_pipeline(LABEL, alias=name)
+        plotter = FoldModelPlots(mdl=mdl)
+        plotter.plot_single_aupr_with_ci()
+        plotter.plot_single_roc_with_ci()
+        plotter.plot_precision_recall()
+        plotter.plot_roc()
+        plotter.plot_precision_recall_by_fold()
+        plotter.plot_roc_by_fold()
