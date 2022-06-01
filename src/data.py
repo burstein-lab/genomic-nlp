@@ -19,6 +19,7 @@ class Embedding(object):
         self.data = None
         self.unknown_embeddings = None
         self.unknown_word2index = None
+        self.data_with_words = None
 
     def extract_known_words(self, unknown="hypo.clst"):
         idxs = [self.mdl.wv.vocab[word].index for word in self.mdl.wv.vocab if unknown not in word]
@@ -53,7 +54,7 @@ class Embedding(object):
         if self.labels is None:
             self.labels = eff_words[label].unique()
 
-    def add_other_class(self, label='label', sample_size=20, min_points=50):
+    def add_other_class(self, label='label', sample_size=12, min_points=30):
         eff_words = self.effective_words
         eff_words[label] = eff_words[label].apply(lambda x: re.split('(.)\[|\(|,', x)[0].strip())  # remove redundant
 
@@ -74,8 +75,9 @@ class Embedding(object):
         df = pd.DataFrame(self.known_embeddings)
         if add_other:
             self.add_other_class()
-        df = df.reset_index().merge(self.train_words, on="index", how="right").drop(columns=["index", "word"])
-        self.data = df
+        df = df.reset_index().merge(self.train_words, on="index", how="right")
+        self.data_with_words = df
+        self.data = df.drop(columns=["index", "word"])
 
 
     def process_unknown_words(self, labels2filter, label='label'):
