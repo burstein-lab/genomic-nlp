@@ -1,8 +1,6 @@
 import logging
 import os
 import sys
-sys.path.append("/davidb/daniellemiller/BioNLP/BioNLP")
-
 from src.models import NNClfCVFolds, RFClfCVFolds, XGBClfCVFolds, SVMClfCVFolds
 from src.plot import FoldModelPlots
 import argparse
