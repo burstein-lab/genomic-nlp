@@ -107,6 +107,9 @@ To regenerate the model predictions run:
 cd models_and_data/gene2vec_w5_v300_tf24_annotation_extended/
 python scripts/predict_hypothetical.py --model PATH_TO_W2V_MDL --output PATH_TO_OUT_DIR --metadata ../metadata.csv
 ```
+### Running times
+Model loading, result generation and analysis script are anticipated to run from few seconds up to 4-5 min.\
+re-training of language model, and dimensionality reduction can take up to 10h with 20 CPUs.
 
 
 ### Paper figures reproducibility
