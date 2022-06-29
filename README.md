@@ -38,7 +38,8 @@ conda env create -f environment.yml
 conda activate g2v-env
 ```
 
-The setup was tested on Python 3.7. Versions of all required programs appear in `requirements.txt` (for pip) and `environment.yml` (for conda).
+The setup was tested on Python 3.7.
+Versions of all required programs appear in `requirements.txt` (for pip) and `environment.yml` (for conda).
 
 ### Trained gene annotation embedding
 The trained word2vec model on the entire genomic corpus are available in `models_and_data` as a gensim model.
