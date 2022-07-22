@@ -4,8 +4,8 @@ import numpy as np
 import os
 import glob
 
-from src.models import NNClf
-from src.data import Embedding
+from src.genomic_embeddings.models import NNClf
+from src.genomic_embeddings.data import Embedding
 import argparse
 import pickle
 

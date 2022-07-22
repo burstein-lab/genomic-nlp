@@ -2,9 +2,9 @@ import logging
 import os
 import pandas as pd
 from sklearn.model_selection import StratifiedKFold
-from src.models import MLClf, MLClfFolds, NNClf, NNClfFolds
-from src.data import Embedding
-from src.plot import ModelPlots, FoldModelPlots
+from src.genomic_embeddings.models import MLClf, MLClfFolds, NNClf, NNClfFolds
+from src.genomic_embeddings.data import Embedding
+from src.genomic_embeddings.plot import ModelPlots, FoldModelPlots
 import argparse
 
 

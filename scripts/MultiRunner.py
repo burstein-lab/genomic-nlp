@@ -1,4 +1,4 @@
-from src import Gff, corpus
+from src.genomic_embeddings import Gff, corpus
 import os
 import argparse
 

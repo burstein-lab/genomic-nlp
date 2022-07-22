@@ -1,8 +1,8 @@
 import logging
 import os
 import sys
-from src.models import NNClfCVFolds, RFClfCVFolds, XGBClfCVFolds, SVMClfCVFolds
-from src.plot import FoldModelPlots
+from src.genomic_embeddings.models import NNClfCVFolds, RFClfCVFolds, XGBClfCVFolds, SVMClfCVFolds
+from src.genomic_embeddings.plot import FoldModelPlots
 import argparse
 import pickle
 

@@ -41,22 +41,32 @@ conda activate g2v-env
 The setup was tested on Python 3.7.
 Versions of all required programs appear in `requirements.txt` (for pip) and `environment.yml` (for conda).
 
+### code availability
+The source code used to train the word2vec model, extract its embedding and functional classifier can be
+downloaded using pip:
+
+```
+pip install genomic-embeddings
+```
+
+
 ### Trained gene annotation embedding
 The trained word2vec model on the entire genomic corpus are available in `models_and_data` as a gensim model.
 To farther use them for downstream analysis set up your working environment and load the model.
 
 In python:
 ```
-from gensim.models import word2vec as w2v
+from genomic-embeddings import Embeddings
 
-MODEL = model_and_data/gene2vec_w5_v300_tf24_annotation_extended/gene2vec_w5_v300_tf24_annotation_extended_2021-10-03.w2v
-mdl = w2v.Word2Vec.load(MODEL)
+model_path = model_and_data/gene2vec_w5_v300_tf24_annotation_extended/gene2vec_w5_v300_tf24_annotation_extended_2021-10-03.w2v
+gene_embeddings = Embeddings.load_embeddings(model_path)
 ```
 
-from here you may use [gensim api](https://radimrehurek.com/gensim/models/word2vec.html) to extract words embeddings, calculate distances between words and more 
+from here you may use [gensim api](https://radimrehurek.com/gensim/models/word2vec.html) to extract words embeddings, 
+calculate distances between words and more 
 For example:
 ```
-mdl.wv.vocab["K09140.2"]
+gene_embeddings.wv.vocab["K09140.2"]
 ```
 will obtain the embedding of the word `K09140.2`, a sub-cluster of the KO identifier `K09140` in KEGG.
 
@@ -65,10 +75,17 @@ Gene embeddings after dimension reduction using UMAP are available as a pickle f
 
 In python:
 ```
-import pickle
+from genomic-embeddings import Embeddings
 
-with open("model_and_data/gene2vec_w5_v300_tf24_annotation_extended/words_umap_2021-10-03", "rb") as hanle:
-    embbedings_2d = pickle.load(handle)
+embeddings_2d_rep_path = "model_and_data/gene2vec_w5_v300_tf24_annotation_extended/words_umap_2021-10-03"
+embeddings_2d = Embeddings.get_2d_mapping(embeddings_2d_rep_path)
+```
+
+### Functional classifier
+To re-train all function classifier\generate performance plots:
+
+```
+from genomic-embeddings import models
 ```
 
 ###  Re-training word embeddings using the corpus
