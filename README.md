@@ -48,7 +48,6 @@ downloaded using pip:
 pip install genomic-embeddings
 ```
 
-
 ### Trained gene annotation embedding
 The trained word2vec model on the entire genomic corpus are available in `models_and_data` as a gensim model.
 To farther use them for downstream analysis set up your working environment and load the model.
