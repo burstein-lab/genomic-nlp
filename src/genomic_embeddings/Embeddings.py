@@ -1,5 +1,7 @@
 from gensim.models import word2vec as w2v
 import pickle
+import pandas as pd
+
 
 def load_embeddings(embedding_mdl):
     """
@@ -25,6 +27,4 @@ def get_functional_prediction(predicted_hypo_path):
     :param predicted_hypo_path: a path to the pickle file with the hypothetical proteins
     :return: data frame with predictions for every hypothetical word
     """
-    with open(predicted_hypo_path, 'rb') as o:
-        preds = pickle.load(o)
-    return preds
+    return pd.read_pickle(predicted_hypo_path, 'rb')

@@ -5,9 +5,8 @@ This repository contains the code used for compiling and analyzing the "biologic
 **Deciphering microbial gene function using natural language processing**
 
 
-
 ## Getting the data
-<ins>*Note:*</ins> The data will be deposited to the Zenodo database and assigned a permanent DOI.
+*Note:* The data will be deposited to the Zenodo database and assigned a permanent DOI.
 meanwhile, do not use the download instructions below and go to [this link](http://tiny.cc/eb6ouz).
 
 Start by downloading the data files from the Zenodo database.  
@@ -85,23 +84,27 @@ embeddings_2d = Embeddings.get_2d_mapping(embeddings_2d_rep_path)
 To re-train all function classifier\generate performance plots:
 
 ```
-from genomic-embeddings import models
-```
+from genomic_embeddings.models import NNClf
+from genomic_embeddings.data import Embedding
+from genomic_embeddings.plot import ModelPlots
 
-###  Re-training word embeddings using the corpus
-Re-training word embeddings with different parameters can be executed using the following script:
-1. First, go to `models_and_data` folder and extract the corpus files
-```
-cd models_and_data 
-tar -zxvf corpus.tar.gz
-```
-2. Train the model
-```
-python src/gene2vec.py --input 'corpus/*.txt'
-```
-To change specific parameters of the algorithm run
-`python src/gene2vec.py --help` and configure accordingly. 
+metadata_path = '/models_and_data/metadata.csv'
+labels = ['Prokaryotic defense system','Ribosome','Secretion system'] # example labels
 
+# load embedding
+emb = Embedding(mdl=model_path, metadata=metadata_path, labels=label)
+emb.process_data_pipeline(label='label', add_other=True)
+X, y = emb.data.drop(columns=['label']).values, data['label'].values
+
+# classify
+clf = NNClf(X=X, y=y, out_dir='./'),alias='classify') 
+mdl.classification_pipeline('labe', alias='DNN')
+
+# plot 
+plotter = ModelPlots(mdl=clf)
+plotter.plot_precision_recall()
+plotter.plot_roc()
+```
 ### Function classification model validation
 Function classification validations are available in:
 `models_and_data/gene2vec_w5_v300_tf24_annotation_extended/predictions`.   
@@ -119,14 +122,38 @@ All predictions of hypothetical proteins in the corpus can be found here:
 
 To load the file as table, run in python:
 ```
+import 
+preds_path = "models_and_data/gene2vec_w5_v300_tf24_annotation_extended/predictions/hypothetical_predictions.pkl"
+preds = get_functional_prediction(preds_path)
+```
+or the alternative  
+```
 import pandas as pd
 table = pd.read_pickle("models_and_data/gene2vec_w5_v300_tf24_annotation_extended/predictions/hypothetical_predictions.pkl")
 ```
-To regenerate the model predictions run:
+To **regenerate** the model predictions run:
 ```
 cd models_and_data/gene2vec_w5_v300_tf24_annotation_extended/
 python scripts/predict_hypothetical.py --model PATH_TO_W2V_MDL --output PATH_TO_OUT_DIR --metadata ../metadata.csv
 ```
+
+
+
+###  Re-training word embeddings using the corpus
+Re-training word embeddings with different parameters can be executed using the following script:
+1. First, go to `models_and_data` folder and extract the corpus files
+```
+cd models_and_data 
+tar -zxvf corpus.tar.gz
+```
+2. Train the model
+```
+python src/gene2vec.py --input 'corpus/*.txt'
+```
+To change specific parameters of the algorithm run
+`python src/gene2vec.py --help` and configure accordingly. 
+
+
 ### Running times
 Model loading, result generation and analysis script are anticipated to run from few seconds up to 4-5 min.\
 re-training of language model, and dimensionality reduction can take up to 10h with 20 CPUs.
