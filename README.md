@@ -64,7 +64,7 @@ from here you may use [gensim api](https://radimrehurek.com/gensim/models/word2v
 calculate distances between words and more 
 For example:
 ```
-gene_embeddings.wv.vocab["K09140.2"]
+gene_embeddings.wv["K09140.2"]
 ```
 will obtain the embedding of the word `K09140.2`, a sub-cluster of the KO identifier `K09140` in KEGG.
 
@@ -91,13 +91,13 @@ metadata_path = '/models_and_data/metadata.csv'
 labels = ['Prokaryotic defense system','Ribosome','Secretion system'] # example labels
 
 # load embedding
-emb = Embedding(mdl=model_path, metadata=metadata_path, labels=label)
-emb.process_data_pipeline(label='label', add_other=True)
-X, y = emb.data.drop(columns=['label']).values, data['label'].values
+emb = Embedding(mdl=model_path, metadata=metadata_path, labels=labels)
+emb.process_data_pipeline(label='label', q='', add_other=True)
+X, y = emb.data.drop(columns=['label']).values, emb.data['label'].values
 
 # classify
-clf = NNClf(X=X, y=y, out_dir='./'),alias='classify') 
-mdl.classification_pipeline('labe', alias='DNN')
+clf = NNClf(X=X, y=y, out_dir='./')
+clf.classification_pipeline('labe', alias='DNN')
 
 # plot 
 plotter = ModelPlots(mdl=clf)
