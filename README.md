@@ -5,6 +5,7 @@ This repository contains the code used for compiling and analyzing the "biologic
 **Deciphering microbial gene function using natural language processing**
 
 [![DOI](https://zenodo.org/badge/449665025.svg)](https://zenodo.org/badge/latestdoi/449665025)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7047423.svg)](https://doi.org/10.5281/zenodo.7047423)
 
 
 ## Getting the data
