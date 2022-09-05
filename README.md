@@ -5,24 +5,23 @@ This repository contains the code used for compiling and analyzing the "biologic
 **Deciphering microbial gene function using natural language processing**
 
 [![DOI](https://zenodo.org/badge/449665025.svg)](https://zenodo.org/badge/latestdoi/449665025)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7047423.svg)](https://doi.org/10.5281/zenodo.7047423)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7047944.svg)](https://doi.org/10.5281/zenodo.7047944)
 
 
 ## Getting the data
 *Note:* The data will be deposited to the Zenodo database and assigned a permanent DOI.
-meanwhile, do not use the download instructions below and go to [this link](http://tiny.cc/eb6ouz).
+meanwhile, do not use the download instructions below and go to [this link](https://zenodo.org/record/7047944).
 
 Start by downloading the data files from the Zenodo database.  
 
-1. Click on the Zenodo link at the top of the repository or use [this link](http://tiny.cc/eb6ouz) to download the data zip file
+1. Click on the Zenodo link at the top of the repository or use [this link](https://zenodo.org/record/7047944) to download the data zip file
 2. Alternatively, use the command line as follows: 
 ```
 mkdir data
 cd data
 
-wget https://zenodo.org/record/XXX/files/models_and_data.tar.gz?download=1
+wget https://zenodo.org/record/7047944/files/models_and_data.zip?download=1
 tar -zxvf models_and_data.tar.gz
-mv data/* ./
 rm models_and_data.tar.gz
 ```
 
