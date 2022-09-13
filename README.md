@@ -20,7 +20,7 @@ Start by downloading the data files from the Zenodo database.
 mkdir data
 cd data
 
-wget https://zenodo.org/record/7047944/files/models_and_data.zip?download=1
+wget https://zenodo.org/record/7047944/files/models_and_data.tar.gz?download=1
 tar -zxvf models_and_data.tar.gz
 rm models_and_data.tar.gz
 ```
