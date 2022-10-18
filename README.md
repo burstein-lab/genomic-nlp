@@ -27,8 +27,8 @@ rm models_and_data.tar.gz
 First, set up python environment and dependencies. 
 #### using pip
 ```
-python3 -m venv env
-source env/bin/activate
+python3 -m venv g2v-env
+source g2v-env/bin/activate
 pip install -r requirements.txt
 ```
 #### using conda
@@ -54,7 +54,7 @@ To farther use them for downstream analysis set up your working environment and 
 
 In python:
 ```
-from genomic-embeddings import Embeddings
+from genomic_embeddings import Embeddings
 
 model_path = model_and_data/gene2vec_w5_v300_tf24_annotation_extended/gene2vec_w5_v300_tf24_annotation_extended_2021-10-03.w2v
 gene_embeddings = Embeddings.load_embeddings(model_path)
@@ -97,7 +97,7 @@ X, y = emb.data.drop(columns=['label']).values, emb.data['label'].values
 
 # classify
 clf = NNClf(X=X, y=y, out_dir='./')
-clf.classification_pipeline('labe', alias='DNN')
+clf.classification_pipeline('label', alias='DNN')
 
 # plot 
 plotter = ModelPlots(mdl=clf)
