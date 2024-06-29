@@ -158,14 +158,14 @@ Model loading, result generation and analysis script are anticipated to run from
 re-training of language model, and dimensionality reduction can take up to 10h with 20 CPUs.
 
 
-### Paper figures reproducibility
+### Paper figure reproducibility
 All paper figures (excluding illustrations) are available as a jupyter notebook.  
 To run the notebook on your computer, go to `figures/` and type `jupyter notebook` in your command line.  
 The notebook `paper_figures.ipynb` will be available on your local machine.  
 
 *Note:* running the notebook requires the `models_and_data` folder, configure paths accordingly.
 
-
-
-
+### HMM DB
+The HMM database used to annotate the KEGG orthologs (KOs), can be found here:
+[**kg.05_21.ren4prok.2.hmm.db.gz** (2.7GB)](https://drive.google.com/file/d/1am-9fxYXtoZ_RGyzJ-UXW2Qbpfv2srX1/view?usp=sharing).
 
