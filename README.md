@@ -9,8 +9,6 @@ This repository contains the code used for compiling and analyzing the "biologic
 
 
 ## Getting the data
-*Note:* The data will be deposited to the Zenodo database and assigned a permanent DOI.
-meanwhile, do not use the download instructions below and go to [this link](https://zenodo.org/record/7047944).
 
 Start by downloading the data files from the Zenodo database.  
 
