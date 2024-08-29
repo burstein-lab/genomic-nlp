@@ -7,6 +7,7 @@ This repository contains the code used for compiling and analyzing the "biologic
 [![DOI](https://zenodo.org/badge/449665025.svg)](https://zenodo.org/badge/latestdoi/449665025)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7047944.svg)](https://doi.org/10.5281/zenodo.7047944)
 
+:round_pushpin:The model developed in the paper is available as a web service [here](https://gnlp.bursteinlab.org/).
 
 ## Getting the data
 
